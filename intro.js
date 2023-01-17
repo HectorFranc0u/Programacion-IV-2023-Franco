@@ -57,3 +57,16 @@ var alumno = {
 
     mostrarDatos: function(){console.log(`$this.nombre, ${this.apellido}`)}
 }
+
+function Alumno(nombreA, edadA){
+    this.nombre = nombreA
+    this.edad = edadA
+}
+
+var alumnos = []
+
+for(let i=0; i<2; i++){
+    var name = prompt("Escriba el nombre")
+    var edad = prompt("Escriba la edad")
+    alumnos.push(new Alumno(name, edad))
+}

@@ -1,9 +1,10 @@
 <template>
-    {{ loadData.map((d) => d.region ) }}
+    <countriesView :countriesData = "loadData"/>
 </template>
 
 <script>
 import request from './request';
+import countriesView from '../../views/countries/countriesView.vue';
 
 export default({
     data(){
@@ -11,9 +12,14 @@ export default({
             data:[],
             firstIndex: 0,
             lastIndex: 0,
-            sliceData: []
+            sliceData: [],
+            cData: [],
+
         }
     },
+    components:{
+        countriesView
+    },  
     methods:{
         async getAllCountries(){
             const response = await fetch(request.getAllCountries);
@@ -34,10 +40,15 @@ export default({
                 this.lastIndex = this.$store.state.currentPage * 10;
                 this.firstIndex = this.lastIndex - 10;
                 this.sliceData = this.data.slice(this.firstIndex, this.lastIndex)
+                this.cData = this.sliceData.map(d => d.name);
             } else {
                 this.getbyRegion()
+                this.lastIndex = this.$store.state.currentPage *10;
+                this.firstIndex = this.lastIndex - 10;
+                this.sliceData = this.data.slice(this.firstIndex, this.lastIndex)
+                this.cData = this.sliceData.map(d => d.name)
             }
-            return this.sliceData
+            return this.cData
         }, 
         total:{
             get(){
